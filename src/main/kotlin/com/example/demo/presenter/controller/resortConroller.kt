@@ -5,6 +5,7 @@ import com.example.demo.application.service.resortService
 import com.example.demo.presenter.dto.response.resortInfo
 import com.example.demo.presenter.dto.response.resortList
 import com.example.demo.presenter.dto.response.slopeInfo
+import com.example.demo.H1oneCrawler
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
@@ -12,9 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@RestController
+@RestController()
 @RequestMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
 class resortController (
+        private val H1oneCrawler: H1oneCrawler,
         private val resortService: resortService
 ){
     @GetMapping("/resorts")
@@ -36,4 +38,10 @@ class resortController (
     ): List<slopeInfo>{
         return resortService.getResortsSlopes(resortId)
     }
+
+    @GetMapping("/resorts/crawl")
+    fun crawlingTest(): List<String>{
+        return H1oneCrawler.crawling()
+    }
+
 }
