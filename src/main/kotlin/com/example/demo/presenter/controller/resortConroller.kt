@@ -40,6 +40,7 @@ class resortController (
     }
 
     @GetMapping("/resorts/crawl")
+    @Operation(summary = "하이원 리조트 슬로프 정보 크롤링", description = "하이원 리조트의 슬로프 정보를 텍스트 형태로 불러옵니다.")
     fun crawlingTest(): List<String>{
         return H1oneCrawler.crawling()
     }
