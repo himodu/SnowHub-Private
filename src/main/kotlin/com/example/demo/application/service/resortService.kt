@@ -1,15 +1,26 @@
 package com.example.demo.application.service
 
+import com.example.demo.H1oneCrawler
+import com.example.demo.monaCrawler
+import com.example.demo.mujuCrawler
 import com.example.demo.presenter.dto.response.resortInfo
 import com.example.demo.presenter.dto.response.resortList
 import com.example.demo.presenter.dto.response.slopeInfo
+import com.example.demo.vivaldiParkCrawler
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Date
 
 @Service
-class resortService() {
+class resortService(
+        private  val H1oneCralwer: H1oneCrawler,
+        private val vivaldiParkCrawler: vivaldiParkCrawler,
+        private val monaCrawler: monaCrawler,
+        private val mujuCrawler: mujuCrawler
+) {
     fun getResorts() : List<resortList>{
 
         var list = mutableListOf<resortList>()
@@ -53,46 +64,6 @@ class resortService() {
     fun getResortsSlopes(
             resortId: Int
     ) : List<slopeInfo>{
-
-
-
-        val slopeAll = mutableListOf<slopeInfo>()
-        val slopeOpen = mutableListOf<slopeInfo>()
-        val slope1 = slopeInfo(
-                "아테나",
-                "초급",
-                true,
-                true,
-                true,
-                false
-        )
-        val slope2 = slopeInfo(
-                "그리스",
-                "중급",
-                true,
-                true,
-                false,
-                false
-        )
-        val slope3 = slopeInfo(
-                "로마",
-                "고급",
-                true,
-                true,
-                true,
-                false
-        )
-
-
-        slopeAll.add(slope1)
-        slopeAll.add(slope2)
-        slopeAll.add(slope3)
-
-        for(x in slopeAll){
-            if(x.dayOpen){
-                slopeOpen.add(x)
-            }
-        }
-        return slopeOpen
+        return mujuCrawler.crawling()
     }
 }

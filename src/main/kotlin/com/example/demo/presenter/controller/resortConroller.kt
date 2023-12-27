@@ -7,17 +7,20 @@ import com.example.demo.presenter.dto.response.resortList
 import com.example.demo.presenter.dto.response.slopeInfo
 import com.example.demo.H1oneCrawler
 import io.swagger.v3.oas.annotations.Operation
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController()
 @RequestMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
 class resortController (
         private val H1oneCrawler: H1oneCrawler,
-        private val resortService: resortService
+         private val resortService: resortService
 ){
     @GetMapping("/resorts")
     @Operation(summary = "리조트 목록조회", description = "모든 리조트를 조회합니다.")
@@ -41,8 +44,10 @@ class resortController (
 
     @GetMapping("/resorts/crawl")
     @Operation(summary = "하이원 리조트 슬로프 정보 크롤링", description = "하이원 리조트의 슬로프 정보를 텍스트 형태로 불러옵니다.")
-    fun crawlingTest(): List<String>{
-        return H1oneCrawler.crawling()
+    fun crawlingTest(
+
+    ): List<slopeInfo>{
+        return resortService.getResortsSlopes(1)
     }
 
 }
