@@ -5,59 +5,75 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
 import org.springframework.stereotype.Service
+import javax.swing.text.StyledEditorKit.BoldAction
 
 @Service
 class mujuCrawler {
-    fun crawling(): List<slopeInfo>{
-        var doc: Document = Jsoup.connect("https://www.mdysresort.com/convert_main_slope_221207.asp").get()
-        var table: Elements = doc.select(".course_list")
-        var result = mutableListOf<slopeInfo>()
+    data class info(val slopeNm:String, val dawnYn:Boolean, val daytimeYn:Boolean, val afterNoonYn:Boolean, val nightYn:Boolean, val midNightYn:Boolean)
 
-        var dayOpen: Boolean
-        var nightOpen: Boolean
-        var midNightOpen: Boolean
-//
-//        if(table != null){
-//            for(row in table){
-//                var tabletd: Elements = doc.select("td")
-//
-//                var dayOp: Element = tabletd.get(2)
-//                var nigOp: Element = tabletd.get(3)
-//                var midOp: Element = tabletd.get(4)
-//
-//                if(dayOp.attr("alt")=="OPEN"){
-//                    dayOpen = true
-//                }else{
-//                    dayOpen = false
-//                }
-//
-//                if(nigOp.attr("alt")=="OPEN"){
-//                    nightOpen = true
-//                }else{
-//                    nightOpen = false
-//                }
-//
-//                if(midOp.attr("alt")=="OPEN"){
-//                    midNightOpen = true
-//                }else{
-//                    midNightOpen = false
-//                }
-//
-//                var slope = slopeInfo(
-//                        tabletd.get(0).text(),
-//                        tabletd.get(1).text(),
-//                        true,
-//                        dayOpen,
-//                        nightOpen,
-//                        midNightOpen
-//                )
-//                result.add(slope)
-//
-//            }
-//        }else{
-//            println("not Found")
-//        }
-        println(table.html())
-        return result
+    fun crawling(){
+        var doc: Document = Jsoup.connect("https://www.mdysresort.com/convert_main_slope_221207.asp").get()
+        var table: Elements = doc.select(".course_list ul li")
+        var result = mutableListOf<info>()
+
+
+        if(table != null){
+            for(row in table){
+
+                var slopeNm: String = row.select("p").text()
+                if(slopeNm == ""){
+                    continue
+                }
+
+                var dawnOp: Boolean
+                var dayOp: Boolean
+                var afterOp: Boolean
+                var nightOp: Boolean
+                var midNightOp: Boolean
+
+                var openList:Elements = row.select("ul li")
+
+
+                if(openList.get(0).attr("class")=="on"){
+                    println("sex")
+                    dawnOp = true
+                }else{
+                    dawnOp = false
+                }
+                if(openList.get(1).attr("class")=="on"){
+                    dayOp = true
+                }else{
+                    dayOp = false
+                }
+                if(openList.get(2).attr("class")=="on"){
+                    afterOp = true
+                }else{
+                    afterOp = false
+                }
+                if(openList.get(3).attr("class")=="on"){
+                    nightOp = true
+                }else{
+                    nightOp = false
+                }
+                if(openList.get(4).attr("class")=="on"){
+                     midNightOp= true
+                }else{
+                    midNightOp = false
+                }
+
+                var newSlope = info(
+                        slopeNm = slopeNm,
+                        dawnYn = dawnOp,
+                        daytimeYn = dayOp,
+                        afterNoonYn = afterOp,
+                        nightYn = nightOp,
+                        midNightYn = midNightOp
+                )
+                result.add(newSlope)
+            }
+        }else{
+            println("not Found")
+        }
+        println(result)
     }
 }

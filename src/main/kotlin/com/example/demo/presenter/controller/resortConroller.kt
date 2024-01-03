@@ -6,6 +6,7 @@ import com.example.demo.presenter.dto.response.resortInfo
 import com.example.demo.presenter.dto.response.resortList
 import com.example.demo.presenter.dto.response.slopeInfo
 import com.example.demo.H1oneCrawler
+import com.example.demo.vivaldiParkCrawler
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
@@ -34,20 +35,19 @@ class resortController (
     ): resortInfo{
         return resortService.getResortsInfo(resortId)
     }
-    @GetMapping("/resorts/{resort_id}/slopes")
-    @Operation(summary = "리조트 이용가능 슬로프 조회", description = "해당 리조트의 이용가능 슬로프를 조회합니다.")
-    fun getResortsSlopes(
-            @PathVariable("resort_id") resortId: Int
-    ): List<slopeInfo>{
-        return resortService.getResortsSlopes(resortId)
-    }
+//    @GetMapping("/resorts/{resort_id}/slopes")
+//    @Operation(summary = "리조트 이용가능 슬로프 조회", description = "해당 리조트의 이용가능 슬로프를 조회합니다.")
+//    fun getResortsSlopes(
+//            @PathVariable("resort_id") resortId: Int
+//    ): List<slopeInfo>{
+//        return resortService.getResortsInfo(resortId)
+//    }
 
     @GetMapping("/resorts/crawl")
     @Operation(summary = "하이원 리조트 슬로프 정보 크롤링", description = "하이원 리조트의 슬로프 정보를 텍스트 형태로 불러옵니다.")
     fun crawlingTest(
-
-    ): List<slopeInfo>{
-        return resortService.getResortsSlopes(1)
+    ){
+        resortService.getResortsSlopes(1)
     }
 
 }

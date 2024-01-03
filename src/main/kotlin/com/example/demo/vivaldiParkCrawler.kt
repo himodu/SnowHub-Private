@@ -1,68 +1,56 @@
 package com.example.demo
 
 import com.example.demo.presenter.dto.response.slopeInfo
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
-import org.jsoup.select.Elements
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.AutoConfiguration
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
+
+import org.apache.http.client.methods.HttpGet
+import org.apache.http.impl.client.CloseableHttpClient
+import org.apache.http.impl.client.HttpClients
+import org.apache.http.util.EntityUtils
 import org.springframework.stereotype.Service
+import java.net.http.HttpResponse
+
+import java.util.Objects
 
 @Service
 class vivaldiParkCrawler {
+    data class ApiResponse(val slopeNm:String, val slopeGrade:String, val dawnYn:String, val daytimeYn:String, val nightYn:String)
 
+    fun crawling() {
+        val httpClient: CloseableHttpClient = HttpClients.createDefault()
 
-    fun crawling(): List<slopeInfo>{
-        var doc: Document = Jsoup.connect("https://www.sonohotelsresorts.com/daemyung.vp.skiworld.index.ds/dmparse.dm").get()
-        var table: Elements = doc.select("table")
-        var result = mutableListOf<slopeInfo>()
+        try {
+            val uri = "https://www.sonohotelsresorts.com/front.subMainAjax.getSlopeConditionAjax.dp/dmparse.dm"  // 여러 개의 데이터를 반환하는 엔드포인트로 가정
+            val httpGet = HttpGet(uri)
 
-        var dayOpen: Boolean
-        var nightOpen: Boolean
-        var midNightOpen: Boolean
+            val response: org.apache.http.HttpResponse = httpClient.execute(httpGet)
+            val entity = response.entity
 
-//        if(table != null){
-//            for(row in table){
-//                var tabletd: Elements = doc.select("td")
-//
-//                var dayOp: Element = tabletd.get(2)
-//                var nigOp: Element = tabletd.get(3)
-//                var midOp: Element = tabletd.get(4)
-//
-//                if(dayOp.attr("alt")=="OPEN"){
-//                    dayOpen = true
-//                }else{
-//                    dayOpen = false
-//                }
-//
-//                if(nigOp.attr("alt")=="OPEN"){
-//                    nightOpen = true
-//                }else{
-//                    nightOpen = false
-//                }
-//
-//                if(midOp.attr("alt")=="OPEN"){
-//                    midNightOpen = true
-//                }else{
-//                    midNightOpen = false
-//                }
-//
-//                var slope = slopeInfo(
-//                        tabletd.get(0).text(),
-//                        tabletd.get(1).text(),
-//                        true,
-//                        dayOpen,
-//                        nightOpen,
-//                        midNightOpen
-//                )
-//                result.add(slope)
-//
-//            }
-//        }else{
-//            println("not Found")
-//        }
-        println(table.html())
-        return result
+            if (entity != null) {
+                val content: String = EntityUtils.toString(entity)
+
+                // JSON 문자열을 List<ApiResponse>로 역직렬화
+                val jsonObject = Gson().fromJson(content, JsonObject::class.java)
+                val listArray = jsonObject.getAsJsonArray("list")
+
+                val apiResponseListType = object : TypeToken<List<ApiResponse>>() {}.type
+                val slopeInfoList: List<ApiResponse> = Gson().fromJson(listArray, apiResponseListType)
+
+                // 각 ApiResponse에 대한 작업 수행
+                for (apiResponse in slopeInfoList) {
+                    println("Name: ${apiResponse.slopeNm}")
+                    println("Level: ${apiResponse.slopeGrade}")
+                    println("dawn: ${apiResponse.dawnYn}")
+                    println("day: ${apiResponse.daytimeYn}")
+                    println("night: ${apiResponse.nightYn}")
+                    // 추가로 필요한 속성들에 대한 처리
+                    println("------")
+                }
+            }
+        } finally {
+            httpClient.close()
+        }
     }
 }

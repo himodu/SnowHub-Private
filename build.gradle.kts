@@ -33,6 +33,9 @@ dependencies {
 
 	implementation("org.jsoup:jsoup:1.17.1")
 	implementation("org.projectlombok:lombok")
+
+	implementation("org.apache.httpcomponents:httpclient:4.5.13")
+	implementation("com.google.code.gson:gson:2.8.9")
 }
 
 tasks.withType<KotlinCompile> {

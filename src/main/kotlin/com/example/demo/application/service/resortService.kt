@@ -63,7 +63,7 @@ class resortService(
 
     fun getResortsSlopes(
             resortId: Int
-    ) : List<slopeInfo>{
-        return mujuCrawler.crawling()
+    ) {
+        H1oneCralwer.crawling()
     }
 }
