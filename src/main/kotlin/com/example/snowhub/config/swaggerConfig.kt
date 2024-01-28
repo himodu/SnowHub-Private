@@ -1,4 +1,4 @@
-package com.example.demo.config
+package com.example.snowhub.config
 
 import io.swagger.v3.oas.models.Components
 

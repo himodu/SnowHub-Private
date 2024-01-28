@@ -1,6 +1,5 @@
-package com.example.demo
+package com.example.snowhub
 
-import com.example.demo.presenter.dto.response.slopeInfo
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements

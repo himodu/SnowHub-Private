@@ -1,6 +1,4 @@
-package com.example.demo.presenter.dto.response
-
-import java.util.Date
+package com.example.snowhub.presenter.dto.response
 
 data class slopeInfo(
         val name: String,

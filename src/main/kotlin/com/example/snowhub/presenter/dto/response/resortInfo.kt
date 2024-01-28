@@ -1,7 +1,6 @@
-package com.example.demo.presenter.dto.response
+package com.example.snowhub.presenter.dto.response
 
 import java.time.LocalDate
-import java.util.Date
 
 data class resortInfo(
         val resortName: String,

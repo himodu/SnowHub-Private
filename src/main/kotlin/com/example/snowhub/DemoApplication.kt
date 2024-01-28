@@ -1,4 +1,4 @@
-package com.example.demo
+package com.example.snowhub
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

@@ -1,18 +1,11 @@
-package com.example.demo.application.service
+package com.example.snowhub.domain.service
 
-import com.example.demo.H1oneCrawler
-import com.example.demo.monaCrawler
-import com.example.demo.mujuCrawler
-import com.example.demo.presenter.dto.response.resortInfo
-import com.example.demo.presenter.dto.response.resortList
-import com.example.demo.presenter.dto.response.slopeInfo
-import com.example.demo.vivaldiParkCrawler
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
+import com.example.snowhub.*
+import com.example.snowhub.presenter.dto.response.resortInfo
+import com.example.snowhub.presenter.dto.response.resortList
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
 @Service
 class resortService(
@@ -61,9 +54,7 @@ class resortService(
         return info
     }
 
-    fun getResortsSlopes(
-            resortId: Int
-    ) {
-        H1oneCralwer.crawling()
+    fun getResortsSlopes(){
+
     }
 }

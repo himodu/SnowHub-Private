@@ -1,20 +1,15 @@
-package com.example.demo.presenter.controller
+package com.example.snowhub.presenter.controller
 
 
-import com.example.demo.application.service.resortService
-import com.example.demo.presenter.dto.response.resortInfo
-import com.example.demo.presenter.dto.response.resortList
-import com.example.demo.presenter.dto.response.slopeInfo
-import com.example.demo.H1oneCrawler
-import com.example.demo.vivaldiParkCrawler
+import com.example.snowhub.domain.service.resortService
+import com.example.snowhub.presenter.dto.response.resortInfo
+import com.example.snowhub.presenter.dto.response.resortList
+import com.example.snowhub.H1oneCrawler
 import io.swagger.v3.oas.annotations.Operation
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController()
@@ -35,6 +30,7 @@ class resortController (
     ): resortInfo{
         return resortService.getResortsInfo(resortId)
     }
+
 //    @GetMapping("/resorts/{resort_id}/slopes")
 //    @Operation(summary = "리조트 이용가능 슬로프 조회", description = "해당 리조트의 이용가능 슬로프를 조회합니다.")
 //    fun getResortsSlopes(
@@ -47,7 +43,7 @@ class resortController (
     @Operation(summary = "하이원 리조트 슬로프 정보 크롤링", description = "하이원 리조트의 슬로프 정보를 텍스트 형태로 불러옵니다.")
     fun crawlingTest(
     ){
-        resortService.getResortsSlopes(1)
+        resortService.getResortsSlopes()
     }
 
 }

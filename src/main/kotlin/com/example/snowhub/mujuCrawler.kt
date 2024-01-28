@@ -1,11 +1,9 @@
-package com.example.demo
+package com.example.snowhub
 
-import com.example.demo.presenter.dto.response.slopeInfo
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
 import org.springframework.stereotype.Service
-import javax.swing.text.StyledEditorKit.BoldAction
 
 @Service
 class mujuCrawler {
@@ -24,7 +22,6 @@ class mujuCrawler {
                 if(slopeNm == ""){
                     continue
                 }
-
                 var dawnOp: Boolean
                 var dayOp: Boolean
                 var afterOp: Boolean
@@ -35,7 +32,6 @@ class mujuCrawler {
 
 
                 if(openList.get(0).attr("class")=="on"){
-                    println("sex")
                     dawnOp = true
                 }else{
                     dawnOp = false

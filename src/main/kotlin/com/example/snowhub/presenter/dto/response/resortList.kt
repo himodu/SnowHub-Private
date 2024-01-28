@@ -1,4 +1,4 @@
-package com.example.demo.presenter.dto.response
+package com.example.snowhub.presenter.dto.response
 
 data class resortList(
         var resortName: String
