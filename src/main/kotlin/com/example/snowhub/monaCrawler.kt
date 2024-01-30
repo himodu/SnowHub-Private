@@ -2,13 +2,11 @@ package com.example.snowhub
 
 import com.example.snowhub.infrastructure.resort
 import com.example.snowhub.infrastructure.slope
-import com.example.snowhub.presenter.dto.response.slopeInfo
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.ZoneId
 

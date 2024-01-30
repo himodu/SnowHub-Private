@@ -4,15 +4,16 @@ import com.example.snowhub.infrastructure.resort
 import com.example.snowhub.infrastructure.slope
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.ZoneId
 
 @Component
-class phyungChangCrawler {
+class pyeungChangCrawler {
 
-    fun crawling() {
+    fun crawling(){
         var result = mutableListOf<slope>()
 
         var doc: Document = Jsoup.connect("https://phoenixhnr.co.kr/static/pyeongchang/snowpark/slope-lift").get()
@@ -29,11 +30,15 @@ class phyungChangCrawler {
                 "Pyeongchang"
         )
 
-        var tbody: Elements = doc.select("tbody tr")
+        var table: Element = doc.select("table").first()
+        var tbody: Elements = table.select("tbody tr")
         var thElement: Elements
         var tdElement: Elements
+        var spanElement: Elements
 
         for (e in tbody) {
+            day = ""
+            night = ""
 
             thElement = e.select("th")
             if (thElement.size == 2) {
@@ -44,8 +49,24 @@ class phyungChangCrawler {
             }
 
             tdElement = e.select("td")
-            day = tdElement.get(3).text()
-            night = tdElement.get(4).text()
+            spanElement = tdElement.get(3).select("span")
+            for(span in spanElement){
+                println(span.text())
+                if(span.text()!=null){
+                    day = "OPEN"
+                }else{
+                    day = "CLOSE"
+                }
+            }
+            tdElement = e.select("td")
+            spanElement = tdElement.get(4).select("span")
+            for(span in spanElement){
+                if(span.text()!=" "){
+                    night = "OPEN"
+                }else{
+                    night = "CLOSE"
+                }
+            }
 
             var slope = slope(
                     null,
@@ -59,7 +80,7 @@ class phyungChangCrawler {
                     resort
             )
             result.add(slope)
-            println(day + "," + night)
+//            println(day+" , "+ night)
         }
 
     }

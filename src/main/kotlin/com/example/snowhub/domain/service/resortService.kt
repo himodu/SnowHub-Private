@@ -1,6 +1,8 @@
 package com.example.snowhub.domain.service
 
 import com.example.snowhub.*
+import com.example.snowhub.infrastructure.slope
+import com.example.snowhub.pyeungChangCrawler
 import com.example.snowhub.presenter.dto.response.resortInfo
 import com.example.snowhub.presenter.dto.response.resortList
 import org.springframework.stereotype.Service
@@ -12,7 +14,8 @@ class resortService(
         private  val H1oneCralwer: H1oneCrawler,
         private val vivaldiParkCrawler: vivaldiParkCrawler,
         private val monaCrawler: monaCrawler,
-        private val mujuCrawler: mujuCrawler
+        private val mujuCrawler: mujuCrawler,
+        private val pyeungChangCrawler: pyeungChangCrawler
 ) {
     fun getResorts() : List<resortList>{
 
@@ -55,6 +58,6 @@ class resortService(
     }
 
     fun getResortsSlopes(){
-
+        pyeungChangCrawler.crawling()
     }
 }
