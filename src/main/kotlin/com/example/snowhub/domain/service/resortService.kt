@@ -15,7 +15,8 @@ class resortService(
         private val vivaldiParkCrawler: vivaldiParkCrawler,
         private val monaCrawler: monaCrawler,
         private val mujuCrawler: mujuCrawler,
-        private val pyeungChangCrawler: pyeungChangCrawler
+        private val pyeungChangCrawler: pyeungChangCrawler,
+        private val o2Crawler: O2Crawler
 ) {
     fun getResorts() : List<resortList>{
 

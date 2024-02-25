@@ -32,7 +32,9 @@ dependencies {
 
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
+	implementation("org.seleniumhq.selenium:selenium-java:4.16.1")
 	implementation("org.jsoup:jsoup:1.17.1")
+
 	implementation("org.projectlombok:lombok")
 
 	implementation("org.apache.httpcomponents:httpclient:4.5.13")
